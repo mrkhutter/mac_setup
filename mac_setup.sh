@@ -1,20 +1,10 @@
 #!/bin/bash
 set -ex
 
-install_encryptme() {
-    if [ ! -d /Applications/EncryptMe.app ]
-    then
-        curl -L 'https://app.encrypt.me/transition/download/osx/latest/' > /tmp/encryptme.dmg
-        sudo hdiutil attach -nobrowse /tmp/encryptme.dmg
-        cp -r /Volumes/EncryptMe/EncryptMe.app /Volumes/EncryptMe/Applications
-        sudo hdiutil unattach /Volumes/EncryptMe
-    fi
-}
-
 install_mac_apps() {
     if [ ! -f ~/.apps_installed ]
     then
-        curl -s 'https://macapps.link/en/chrome-dropbox-alfred-docker-iterm-1password-flux-spectacle-spotify-vlc-slack' | sh
+        curl -s 'https://macapps.link/en/chrome-firefox-evernote-alfred-docker-iterm-1password-dash-flux-spectacle-spotify-voxplayer-slack' | sh
     fi
 }
 
@@ -28,7 +18,7 @@ brew_install_the_universe() {
     then
         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
-    formulas="chruby wget ruby-install hub npm direnv redis python3 redis ctags elasticsearch jq watch imagemagick selecta htop vim cmake automake autoreconf libtool"
+    formulas="ruby wget ruby-install npm redis vim neovim heroku heroku-node pgcli cmake fzf openssl cmake automake autoreconf libtool postgresql yarn rbenv"
     for formula in $formulas
     do
         brew install $formula || brew upgrade $formula
@@ -37,10 +27,6 @@ brew_install_the_universe() {
 
 install_rubies() {
     ruby-install ruby 2.5
-    ruby-install ruby 2.2.6
-    ruby-install ruby 2.2.7
-    ruby-install ruby 2.3
-    ruby-install ruby 2.4
 }
 
 write_defaults() {
@@ -48,7 +34,7 @@ write_defaults() {
     defaults write com.apple.screencapture location $HOME/screenshots
 
     # no key chooser, prefering repeats instead
-    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+    # defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 }
 
 install_go() {
@@ -60,25 +46,19 @@ install_go() {
 }
 
 
-install_encryptme
 install_mac_apps
+activate_xcode
 brew_install_the_universe
 install_rubies
 write_defaults
 install_go
 
-mkdir -p ~/dev
-
-if [ ! -d ~/dev/rspec ]
-then
-    mkdir -p ~/dev/rspec
-    git clone git@github.com:rspec/rspec-dev ~/dev/rspec/
-fi
+mkdir -p ~/code
 
 if [ ! -d ~/.dotfiles ]
 then
-    git clone git@github.com:samphippen/dotfiles ~/.dotfiles
-    cd ~/.dotfiles && rake install
+    git clone git@github.com:mrkhutter/dotfiles ~/.dotfiles
+    #cd ~/.dotfiles && rake install
 fi
 echo "now log off"
 
