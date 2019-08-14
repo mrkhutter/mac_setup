@@ -4,7 +4,7 @@ set -ex
 install_mac_apps() {
     if [ ! -f ~/.apps_installed ]
     then
-        curl -s 'https://macapps.link/en/chrome-firefox-evernote-alfred-docker-iterm-1password-dash-flux-spectacle-spotify-voxplayer-slack' | sh
+        curl -s 'https://api.macapps.link/en/chrome-firefox-evernote-alfred-docker-iterm-1password-dash-flux-spectacle-spotify-voxplayer-slack' | sh
     fi
 }
 
@@ -26,7 +26,7 @@ brew_install_the_universe() {
 }
 
 install_rubies() {
-    ruby-install ruby 2.5
+    ruby-install ruby 2.6.0
 }
 
 write_defaults() {
