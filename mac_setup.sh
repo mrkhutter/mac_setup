@@ -4,7 +4,7 @@ set -ex
 install_mac_apps() {
     if [ ! -f ~/.apps_installed ]
     then
-        curl -s 'https://api.macapps.link/en/chrome-firefox-evernote-alfred-docker-iterm-1password-dash-flux-spectacle-spotify-voxplayer-slack' | sh
+        curl -s 'https://api.macapps.link/en/chrome-firefox-evernote-notion-alfred-docker-iterm-dash-flux-spectacle-spotify-slack-postman-vscode' | sh
     fi
 }
 
